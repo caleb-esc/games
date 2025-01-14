@@ -96,34 +96,6 @@
             margin: 0 0 10px;
             font-size: 1.25rem;
         }
-        .game-frame {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .game-frame iframe {
-            width: 90%;
-            height: 90%;
-            border: none;
-        }
-        .game-frame button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #ff5733;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
         .about, .contact {
             padding: 40px;
             text-align: center;
@@ -159,39 +131,17 @@
         <h2>Our Games</h2>
         <div class="games-container">
             <div class="game-card">
-                <img src="game1.jpg" alt="Game 1">
-                <h3>Game Title 1</h3>
-                <p>Short description of the game.</p>
-                <a href="#" class="btn">Play Now</a>
-            </div>
-            <div class="game-card">
-                <img src="game2.jpg" alt="Game 2">
-                <h3>Game Title 2</h3>
-                <p>Short description of the game.</p>
-                <a href="#" class="btn">Play Now</a>
-            </div>
-            <div class="game-card">
-                <img src="game3.jpg" alt="Game 3">
-                <h3>Game Title 3</h3>
-                <p>Short description of the game.</p>
-                <a href="#" class="btn">Play Now</a>
-            </div>
-            <div class="game-card">
                 <img src="catfoolyou.jpg" alt="Cat Fool You">
                 <h3>Cat Fool You</h3>
                 <p>Fun and interactive game to play right here.</p>
-                <button class="btn" onclick="openGame('https://catfoolyou.github.io/Website-v2/')">Play Now</button>
+                <a href="https://caleb-esc.github.io/games/cfy.html" class="btn">Play Now</a>
             </div>
             <div class="game-card">
-                <img src="d3rtzzz.jpg" alt="hypackel">
+                <img src="d3rtzzz.jpg" alt="D3 Game">
                 <h3>D3 Game Library</h3>
                 <p>Discover a collection of exciting games.</p>
-                <button class="btn" onclick="openGame('https://d3rtzzzsiu7gdr.cloudfront.net/library.html')">Play Now</button>
+                <a href="https://caleb-esc.github.io/games/hypackel.html" class="btn">Play Now</a>
             </div>
-        </div>
-        <div class="game-frame" id="game-frame">
-            <button onclick="closeGame()">Close</button>
-            <iframe id="game-iframe" allowfullscreen></iframe>
         </div>
     </section>
     <section id="about" class="about">
@@ -216,16 +166,5 @@
     <footer>
         <p>&copy; 2025 Free Unblocked Games. All Rights Reserved.</p>
     </footer>
-    <script>
-        function openGame(url) {
-            document.getElementById('game-iframe').src = url;
-            document.getElementById('game-frame').style.display = 'flex';
-        }
-
-        function closeGame() {
-            document.getElementById('game-frame').style.display = 'none';
-            document.getElementById('game-iframe').src = '';
-        }
-    </script>
 </body>
 </html>
