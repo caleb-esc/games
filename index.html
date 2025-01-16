@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Unblocked Games</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Unblocked Games</title>
     <style>
         body {
             margin: 0;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #0e0e0e;
             color: #fff;
+            overflow-x: hidden;
         }
         header {
             display: flex;
@@ -41,36 +41,18 @@
         nav ul li a:hover {
             color: #ff5733;
         }
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background: url('hero-bg.jpg') no-repeat center center/cover;
-            text-align: center;
+        #animationCanvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
-        .hero-text h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-        .hero-text p {
-            font-size: 1.25rem;
-            margin-bottom: 20px;
-        }
-        .btn {
-            background-color: #ff5733;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-        .btn:hover {
-            background-color: #c74329;
+        .content {
+            margin-top: 300px;
+            position: relative;
+            z-index: 2;
+            padding: 20px;
         }
         .games {
             padding: 40px;
@@ -96,21 +78,26 @@
             margin: 0 0 10px;
             font-size: 1.25rem;
         }
-        .about, .contact {
-            padding: 40px;
-            text-align: center;
+        .btn {
+            background-color: #ff5733;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s;
         }
-        footer {
-            padding: 20px;
-            text-align: center;
-            background: #1a1a1a;
-            border-top: 1px solid #333;
+        .btn:hover {
+            background-color: #c74329;
         }
     </style>
 </head>
 <body>
+    <canvas id="animationCanvas"></canvas>
     <header>
-        <div class="logo">🎮 Free Unblocked Games</div>
+        <div class="logo">🎮 Unblocked Games</div>
         <nav>
             <ul>
                 <li><a href="#home">Home</a></li>
@@ -120,51 +107,127 @@
             </ul>
         </nav>
     </header>
-    <section id="home" class="hero">
-        <div class="hero-text">
-            <h1>Welcome to Free Unblocked Games</h1>
-            <p>Play the best online games anytime, anywhere, without restrictions.</p>
-            <a href="#games" class="btn">Explore Games</a>
-        </div>
-    </section>
-    <section id="games" class="games">
-        <h2>Our Games</h2>
-        <div class="games-container">
-            <div class="game-card">
-                <img src="catfoolyou.jpg" alt="Cat Fool You">
-                <h3>Cat Fool You</h3>
-                <p>Fun and interactive game to play right here.</p>
-                <a href="https://caleb-esc.github.io/games/cfy.html" class="btn">Play Now</a>
+    <div class="content">
+        <section id="games" class="games">
+            <h2>Our Games</h2>
+            <div class="games-container">
+                <div class="game-card">
+                    <img src="catfoolyou.jpg" alt="Cat Fool You">
+                    <h3>Cat Fool You</h3>
+                    <a href="https://caleb-esc.github.io/games/cfy.html" class="btn">Play Now</a>
+                </div>
+                <div class="game-card">
+                    <img src="d3rtzzz.jpg" alt="D3 Game">
+                    <h3>D3 Game Library</h3>
+                    <a href="https://caleb-esc.github.io/games/hypackel.html" class="btn">Play Now</a>
+                </div>
             </div>
-            <div class="game-card">
-                <img src="d3rtzzz.jpg" alt="D3 Game">
-                <h3>D3 Game Library</h3>
-                <p>Discover a collection of exciting games.</p>
-                <a href="https://caleb-esc.github.io/games/hypackel.html" class="btn">Play Now</a>
-            </div>
-        </div>
-    </section>
-    <section id="about" class="about">
-        <h2>About Us</h2>
-        <p>We provide free unblocked games that are fun, safe, and accessible from anywhere. Our mission is to bring enjoyment and creativity to your screen.</p>
-    </section>
-    <section id="contact" class="contact">
-        <h2>Contact Us</h2>
-        <form id="contact-form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+        </section>
+    </div>
+    <script>
+        // Interactive Moving Balls Script with Rainbow Gradient and More Balls
+        const canvas = document.getElementById("animationCanvas");
+        const ctx = canvas.getContext("2d");
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+        canvas.width = window.innerWidth;
+        canvas.height = 300; // Restrict height to the top part of the page
 
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
+        const mouse = { x: null, y: null };
+        const balls = [];
+        const ballRadius = 1.5;
 
-            <button type="submit">Send</button>
-        </form>
-    </section>
-    <footer>
-        <p>&copy; 2025 Free Unblocked Games. All Rights Reserved.</p>
-    </footer>
+        document.addEventListener("mousemove", (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        document.addEventListener("mouseout", () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        class Ball {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.originalX = x;
+                this.originalY = y;
+                this.color = getRainbowColor(x);
+                this.dx = 0;
+                this.dy = 0;
+                this.mass = 1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, ballRadius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            update() {
+                const distanceX = mouse.x - this.x;
+                const distanceY = mouse.y - this.y;
+                const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
+
+                if (distance < 100) {
+                    const angle = Math.atan2(distanceY, distanceX);
+                    const force = (100 - distance) / 10;
+                    const forceX = Math.cos(angle) * force;
+                    const forceY = Math.sin(angle) * force;
+
+                    this.dx -= forceX / this.mass;
+                    this.dy -= forceY / this.mass;
+                } else {
+                    // Gradually return to original position
+                    this.dx += (this.originalX - this.x) * 0.05;
+                    this.dy += (this.originalY - this.y) * 0.05;
+                }
+
+                // Apply velocity and friction
+                this.x += this.dx;
+                this.y += this.dy;
+                this.dx *= 0.9;
+                this.dy *= 0.9;
+
+                this.draw();
+            }
+        }
+
+        function getRainbowColor(x) {
+            const hue = Math.round((x / canvas.width) * 360); // Map x to 0-360 degrees
+            return `hsl(${hue}, 100%, 50%)`; // Convert to HSL for vibrant rainbow colors
+        }
+
+        function createText() {
+            ctx.font = "70px Arial"; // Bigger font size
+            ctx.fillStyle = "white";
+            ctx.fillText("IDK TF THIS IS", canvas.width / 4, 150);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+            for (let y = 0; y < imageData.height; y += 4) { // Smaller spacing for more balls
+                for (let x = 0; x < imageData.width; x += 4) {
+                    const index = (y * imageData.width + x) * 4;
+                    if (imageData.data[index + 3] > 128) { // Check alpha value
+                        balls.push(new Ball(x, y));
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            balls.forEach(ball => ball.update());
+            requestAnimationFrame(animate);
+        }
+
+        function init() {
+            createText();
+            animate();
+        }
+
+        init();
+    </script>
 </body>
 </html>
