@@ -125,12 +125,11 @@
         </section>
     </div>
     <script>
-        // Interactive Moving Balls Script with Rainbow Gradient and More Balls
         const canvas = document.getElementById("animationCanvas");
         const ctx = canvas.getContext("2d");
 
         canvas.width = window.innerWidth;
-        canvas.height = 300; // Restrict height to the top part of the page
+        canvas.height = 300;
 
         const mouse = { x: null, y: null };
         const balls = [];
@@ -146,6 +145,20 @@
             mouse.y = null;
         });
 
+        document.addEventListener("click", () => {
+            balls.forEach(ball => {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 10 + 5;
+                ball.dx = Math.cos(angle) * speed;
+                ball.dy = Math.sin(angle) * speed;
+            });
+            setTimeout(() => {
+                balls.forEach(ball => {
+                    ball.returning = true;
+                });
+            }, 1000);
+        });
+
         class Ball {
             constructor(x, y) {
                 this.x = x;
@@ -156,6 +169,7 @@
                 this.dx = 0;
                 this.dy = 0;
                 this.mass = 1;
+                this.returning = false;
             }
 
             draw() {
@@ -167,49 +181,41 @@
             }
 
             update() {
-                const distanceX = mouse.x - this.x;
-                const distanceY = mouse.y - this.y;
-                const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
-
-                if (distance < 100) {
-                    const angle = Math.atan2(distanceY, distanceX);
-                    const force = (100 - distance) / 10;
-                    const forceX = Math.cos(angle) * force;
-                    const forceY = Math.sin(angle) * force;
-
-                    this.dx -= forceX / this.mass;
-                    this.dy -= forceY / this.mass;
-                } else {
-                    // Gradually return to original position
-                    this.dx += (this.originalX - this.x) * 0.05;
-                    this.dy += (this.originalY - this.y) * 0.05;
+                if (this.returning) {
+                    this.dx += (this.originalX - this.x) * 0.1;
+                    this.dy += (this.originalY - this.y) * 0.1;
                 }
 
-                // Apply velocity and friction
                 this.x += this.dx;
                 this.y += this.dy;
                 this.dx *= 0.9;
                 this.dy *= 0.9;
+
+                if (this.returning && Math.abs(this.dx) < 0.1 && Math.abs(this.dy) < 0.1) {
+                    this.returning = false;
+                    this.dx = 0;
+                    this.dy = 0;
+                }
 
                 this.draw();
             }
         }
 
         function getRainbowColor(x) {
-            const hue = Math.round((x / canvas.width) * 360); // Map x to 0-360 degrees
-            return `hsl(${hue}, 100%, 50%)`; // Convert to HSL for vibrant rainbow colors
+            const hue = Math.round((x / canvas.width) * 360);
+            return `hsl(${hue}, 100%, 50%)`;
         }
 
         function createText() {
-            ctx.font = "70px Arial"; // Bigger font size
+            ctx.font = "70px Arial";
             ctx.fillStyle = "white";
             ctx.fillText("IDK TF THIS IS", canvas.width / 4, 150);
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-            for (let y = 0; y < imageData.height; y += 4) { // Smaller spacing for more balls
+            for (let y = 0; y < imageData.height; y += 4) {
                 for (let x = 0; x < imageData.width; x += 4) {
                     const index = (y * imageData.width + x) * 4;
-                    if (imageData.data[index + 3] > 128) { // Check alpha value
+                    if (imageData.data[index + 3] > 128) {
                         balls.push(new Ball(x, y));
                     }
                 }
