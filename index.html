@@ -41,19 +41,6 @@
         nav ul li a:hover {
             color: #ff5733;
         }
-        #animationCanvas {
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-        .content {
-            margin-top: 300px;
-            position: relative;
-            z-index: 2;
-            padding: 20px;
-        }
         .games {
             padding: 40px;
             text-align: center;
@@ -95,7 +82,6 @@
     </style>
 </head>
 <body>
-    <canvas id="animationCanvas"></canvas>
     <header>
         <div class="logo">🎮 Unblocked Games</div>
         <nav>
@@ -107,133 +93,26 @@
             </ul>
         </nav>
     </header>
-    <div class="content">
-        <section id="games" class="games">
-            <h2>Our Games</h2>
-            <div class="games-container">
-                <div class="game-card">
-                    <img src="catfoolyou.jpg" alt="Cat Fool You">
-                    <h3>Cat Fool You</h3>
-                    <a href="https://caleb-esc.github.io/games/cfy.html" class="btn">Play Now</a>
-                </div>
-                <div class="game-card">
-                    <img src="d3rtzzz.jpg" alt="D3 Game">
-                    <h3>D3 Game Library</h3>
-                    <a href="https://caleb-esc.github.io/games/hypackel.html" class="btn">Play Now</a>
-                </div>
+
+    <section id="games" class="games">
+        <h2>Our Games</h2>
+        <div class="games-container">
+            <div class="game-card">
+                <img src="catfoolyou.jpg" alt="Cat Fool You">
+                <h3>Cat Fool You</h3>
+                <a href="https://caleb-esc.github.io/games/cfy.html" class="btn">Play Now</a>
             </div>
-        </section>
-    </div>
-    <script>
-        const canvas = document.getElementById("animationCanvas");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = window.innerWidth;
-        canvas.height = 300;
-
-        const mouse = { x: null, y: null };
-        const balls = [];
-        const ballRadius = 1.5;
-
-        document.addEventListener("mousemove", (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-        });
-
-        document.addEventListener("mouseout", () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        document.addEventListener("click", () => {
-            balls.forEach(ball => {
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 10 + 5;
-                ball.dx = Math.cos(angle) * speed;
-                ball.dy = Math.sin(angle) * speed;
-            });
-            setTimeout(() => {
-                balls.forEach(ball => {
-                    ball.returning = true;
-                });
-            }, 1000);
-        });
-
-        class Ball {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.originalX = x;
-                this.originalY = y;
-                this.color = getRainbowColor(x);
-                this.dx = 0;
-                this.dy = 0;
-                this.mass = 1;
-                this.returning = false;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, ballRadius, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-                ctx.closePath();
-            }
-
-            update() {
-                if (this.returning) {
-                    this.dx += (this.originalX - this.x) * 0.1;
-                    this.dy += (this.originalY - this.y) * 0.1;
-                }
-
-                this.x += this.dx;
-                this.y += this.dy;
-                this.dx *= 0.9;
-                this.dy *= 0.9;
-
-                if (this.returning && Math.abs(this.dx) < 0.1 && Math.abs(this.dy) < 0.1) {
-                    this.returning = false;
-                    this.dx = 0;
-                    this.dy = 0;
-                }
-
-                this.draw();
-            }
-        }
-
-        function getRainbowColor(x) {
-            const hue = Math.round((x / canvas.width) * 360);
-            return `hsl(${hue}, 100%, 50%)`;
-        }
-
-        function createText() {
-            ctx.font = "70px Arial";
-            ctx.fillStyle = "white";
-            ctx.fillText("IDK TF THIS IS", canvas.width / 4, 150);
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-            for (let y = 0; y < imageData.height; y += 4) {
-                for (let x = 0; x < imageData.width; x += 4) {
-                    const index = (y * imageData.width + x) * 4;
-                    if (imageData.data[index + 3] > 128) {
-                        balls.push(new Ball(x, y));
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            balls.forEach(ball => ball.update());
-            requestAnimationFrame(animate);
-        }
-
-        function init() {
-            createText();
-            animate();
-        }
-
-        init();
-    </script>
+            <div class="game-card">
+                <img src="d3rtzzz.jpg" alt="D3 Game">
+                <h3>D3 Game Library</h3>
+                <a href="https://caleb-esc.github.io/games/hypackel.html" class="btn">Play Now</a>
+            </div>
+            <div class="game-card">
+                <img src="4colors.jpg" alt="4 Colors">
+                <h3>4 Colors</h3>
+                <a href="https://caleb-esc.github.io/games/4colors.html" class="btn">Play Now</a>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
